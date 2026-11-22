@@ -90,20 +90,40 @@ header{height:70px;display:flex;align-items:center;justify-content:space-between
 .backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:15;opacity:0;transition:opacity .3s ease}
 .chart-scroll{overflow-x:auto}
 @media (max-width:760px){aside{position:fixed;z-index:20;inset:0 auto 0 0;width:260px;overflow-y:auto;transform:translateX(-100%);padding-top:env(safe-area-inset-top,0px)}aside.open{transform:none}.backdrop.show{display:block;opacity:1}header{padding:0 14px}.me{font-size:14px}.grid{grid-template-columns:1fr;gap:14px}.profile{grid-column:auto;padding:26px 20px}.stat{min-height:110px;padding:18px}.stat .v{font-size:30px}.stat .ic{width:52px;height:52px;font-size:22px}.wrap{padding:14px}.banner{padding:16px 18px;border-radius:16px}.banner h1{font-size:22px}.banner small{font-size:14px}.pills{width:100%}.pill{font-size:13px;padding:7px 10px}.chart{padding:12px;margin-top:16px}.chart h2{font-size:16px}.chart svg{min-width:640px}}
-.upd{margin-top:22px;border:1px solid var(--brand);border-radius:16px;padding:18px 20px;background:var(--bg);animation:fadeInUp .6s cubic-bezier(0.16,1,0.3,1) .5s both}
-.upd h2{margin:0 0 12px;font-size:18px;letter-spacing:.3px}
+.upd{margin-top:22px;border:1px solid var(--brand);border-radius:16px;padding:18px 20px;background:var(--bg);animation:fadeInUp .6s cubic-bezier(0.16,1,0.3,1) .5s both;transition:box-shadow .3s ease}
+.upd-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.upd-head h2{margin:0;font-size:18px;letter-spacing:.3px}
+.upd-tabs{display:inline-flex;background:var(--chip);border:1px solid var(--line);border-radius:12px;padding:3px;gap:4px}
+.upd-tab{background:none !important;border:0 !important;padding:7px 14px !important;border-radius:9px !important;font:inherit;font-size:13px !important;font-weight:600 !important;color:var(--muted) !important;cursor:pointer;transition:all .2s ease;box-shadow:none !important;transform:none !important}
+.upd-tab:hover{color:var(--brand) !important}
+.upd-tab.active{background:linear-gradient(135deg,var(--brand),var(--brand2)) !important;color:#fff !important;box-shadow:0 2px 8px rgba(107,68,35,.25) !important}
 .upd-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .upd input{font:inherit;font-size:15px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);min-width:0}
-.upd input:focus{border-color:var(--brand2)}
-#amt{flex:1 1 200px}#edate{flex:0 1 170px}
+.upd input:focus{border-color:var(--brand2);outline:none}
+#amt{flex:1 1 200px}#edate{flex:0 1 170px}#leadamt{flex:1 1 220px}
 .upd button{font:inherit;font-size:15px;font-weight:600;padding:10px 20px;border:0;border-radius:10px;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--brand),var(--brand2));transition:transform .2s ease,box-shadow .2s ease}
 .upd button:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(107,68,35,.35)}
 .upd button:active{transform:scale(.96)}
 .upd button.ghost{background:var(--chip);color:var(--brand);border:1px solid var(--line)}
+.upd button.lead-btn{background:linear-gradient(135deg,#7d4e28,#b27948)}
+.lead-badge{display:inline-flex;align-items:center;gap:8px;background:var(--chip);border:1px solid var(--line);border-radius:10px;padding:6px 14px;font-size:13px;color:var(--text);margin-bottom:12px}
+.lead-badge strong{color:var(--brand);font-size:15px;font-weight:700}
+.card.stat.clickable{cursor:pointer}
+.card.stat.clickable:hover{box-shadow:0 14px 28px rgba(107,68,35,.45)}
 .chips{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
 .chips button{padding:5px 14px;font-size:13px;background:var(--chip);color:var(--brand);border:1px solid var(--line)}
-#umsg{margin-top:10px;font-size:14px;min-height:20px;color:#2e9d57}#umsg.err{color:#c0392b}
-@media (max-width:760px){.upd{padding:12px;margin-top:16px}.upd button{flex:1 1 auto}#edate{flex:1 1 140px}}
+#umsg{margin-top:10px;font-size:14px;min-height:20px;color:#2e9d57;font-weight:500}#umsg.err{color:#c0392b}
+@keyframes highlightSec{0%{box-shadow:0 0 0 0 rgba(255,210,63,0)}35%{box-shadow:0 0 0 6px rgba(255,210,63,.6)}100%{box-shadow:0 4px 14px rgba(0,0,0,0.03)}}
+.upd.glow{animation:highlightSec 1.2s ease}
+@media (max-width:760px){
+  .upd{padding:12px;margin-top:16px}
+  .upd-head{flex-direction:column;align-items:stretch;gap:10px}
+  .upd-tabs{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  .upd-tab{padding:8px 6px !important;text-align:center;font-size:12px !important}
+  .upd button{flex:1 1 auto}
+  #edate{flex:1 1 140px}
+  #amt,#leadamt{flex:1 1 100%}
+}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 </style>
 </head>
@@ -148,7 +168,7 @@ header{height:70px;display:flex;align-items:center;justify-content:space-between
       <div class="card stat"><div><h4>Last 7 Days</h4><div class="v" id="v-week">₹0</div><div class="s">• Weekly summary</div></div><div class="ic">📊</div></div>
       <div class="card stat"><div><h4>Last 30 Days</h4><div class="v" id="v-month">₹0</div><div class="s">• Monthly summary</div></div><div class="ic">📅</div></div>
       <div class="card stat"><div><h4>All Time Earnings</h4><div class="v" id="v-all">₹0</div><div class="s">• Total lifetime</div></div><div class="ic">🏆</div></div>
-      <div class="card stat"><div><h4>Leadership Incentive</h4><div class="v" id="v-lead">₹0</div><div class="s">• Residual earnings</div></div><div class="ic">🤲</div></div>
+      <div class="card stat" id="card-lead"><div><h4>Leadership Incentive</h4><div class="v" id="v-lead">₹0</div><div class="s">• Residual earnings</div></div><div class="ic">🤲</div></div>
     </section>
 
     <section class="chart">
@@ -156,15 +176,53 @@ header{height:70px;display:flex;align-items:center;justify-content:space-between
       <div class="chart-scroll"><svg id="svg" viewBox="0 0 1000 360" role="img" aria-label="Sales over the last 7 days"></svg></div>
     </section>
 
-    <section class="upd">
-      <h2>UPDATE EARNING</h2>
-      <div class="upd-row">
-        <input id="amt" type="number" inputmode="decimal" min="0" step="any" placeholder="Amount (₹) jaise 500" aria-label="Earning amount in rupees">
-        <input id="edate" type="date" aria-label="Date">
-        <button id="addbtn" type="button">Add Earning</button>
-        <button id="clrbtn" type="button" class="ghost">Reset</button>
+    <section class="upd" id="upd-sec">
+      <div class="upd-head">
+        <h2>UPDATE EARNINGS & INCENTIVE</h2>
+        <div class="upd-tabs" role="tablist">
+          <button type="button" class="upd-tab active" id="tab-earn" role="tab" aria-selected="true">💰 Daily Earning</button>
+          <button type="button" class="upd-tab" id="tab-lead" role="tab" aria-selected="false">🤲 Leadership Incentive</button>
+        </div>
       </div>
-      <div class="chips"><button type="button" data-q="100">+100</button><button type="button" data-q="500">+500</button><button type="button" data-q="1000">+1000</button><button type="button" data-q="5000">+5000</button></div>
+
+      <!-- Panel 1: Regular Daily Earning -->
+      <div id="panel-earn">
+        <div class="upd-row">
+          <input id="amt" type="number" inputmode="decimal" min="0" step="any" placeholder="Amount (₹) jaise 500" aria-label="Earning amount in rupees">
+          <input id="edate" type="date" aria-label="Date">
+          <button id="addbtn" type="button">Add Earning</button>
+          <button id="quickleadbtn" type="button" class="lead-btn" title="Is amount ko seedha Leadership Incentive me jodo">+ To Leadership</button>
+          <button id="clrbtn" type="button" class="ghost">Reset All</button>
+        </div>
+        <div class="chips" id="earn-chips">
+          <button type="button" data-q="100">+100</button>
+          <button type="button" data-q="500">+500</button>
+          <button type="button" data-q="1000">+1000</button>
+          <button type="button" data-q="5000">+5000</button>
+        </div>
+      </div>
+
+      <!-- Panel 2: Leadership Incentive -->
+      <div id="panel-lead" style="display:none">
+        <div class="lead-badge">
+          <span>Current Leadership Incentive:</span>
+          <strong id="lead-curr-val">₹0</strong>
+        </div>
+        <div class="upd-row">
+          <input id="leadamt" type="number" inputmode="decimal" min="0" step="any" placeholder="Incentive Amount (₹) jaise 1000" aria-label="Leadership incentive amount in rupees">
+          <button id="addleadbtn" type="button">+ Badhayein (+ Add)</button>
+          <button id="setleadbtn" type="button" class="ghost">Set Total (=)</button>
+          <button id="clrleadbtn" type="button" class="ghost" style="color:#c0392b">Reset to 0</button>
+        </div>
+        <div class="chips" id="lead-chips">
+          <button type="button" data-q="500">+500</button>
+          <button type="button" data-q="1000">+1000</button>
+          <button type="button" data-q="2000">+2000</button>
+          <button type="button" data-q="5000">+5000</button>
+          <button type="button" data-q="10000">+10000</button>
+        </div>
+      </div>
+
       <div id="umsg" role="status" aria-live="polite"></div>
     </section>
   </div>
@@ -275,6 +333,7 @@ function render(){
   const c=compute();
   setNum($("v-today"),c.today);setNum($("v-week"),c.week);setNum($("v-month"),c.month);
   setNum($("v-all"),c.all);setNum($("v-lead"),LEAD);
+  const curLeadEl=$("lead-curr-val");if(curLeadEl)curLeadEl.textContent=inr(LEAD);
   drawChart(c.days);
 }
 
@@ -297,9 +356,11 @@ async function load(){
 /* Test / manual helpers (browser console me chalao):
    addEarning(500)  -> aaj ki earning me ₹500 jodo
    addEarning(300,"2026-11-14") -> kisi purani date me jodo
+   addLeadership(500) -> leadership incentive badhao
    setLeadership(1200), clearEarnings()                                           */
 window.addEarning=(amt,date)=>{EARN.push({date:date||dkey(new Date()),amount:Number(amt)||0});if(!CONFIG.API_URL)saveLocal();render()};
-window.setLeadership=n=>{LEAD=Number(n)||0;if(!CONFIG.API_URL)saveLocal();render()};
+window.setLeadership=n=>{LEAD=Math.max(0,Number(n)||0);if(!CONFIG.API_URL)saveLocal();render()};
+window.addLeadership=amt=>{const n=Math.max(0,(Number(LEAD)||0)+(Number(amt)||0));window.setLeadership(n);return n};
 window.clearEarnings=()=>{EARN=[];LEAD=0;if(!CONFIG.API_URL)saveLocal();render()};
 
 load();
@@ -320,10 +381,37 @@ document.querySelectorAll("nav a").forEach(a=>a.onclick=()=>{
 });
 
 
-/* ===== Update Earning form ===== */
+/* ===== Update Earning & Incentive form ===== */
 const edate=$("edate");
 edate.value=dkey(new Date());edate.max=dkey(new Date());
 function msg(t,err){const m=$("umsg");m.textContent=t;m.className=err?"err":"";clearTimeout(m._t);m._t=setTimeout(()=>{m.textContent=""},4000)}
+
+function switchTab(type){
+  const isEarn=type==="earn";
+  $("tab-earn").classList.toggle("active",isEarn);
+  $("tab-lead").classList.toggle("active",!isEarn);
+  $("tab-earn").setAttribute("aria-selected",isEarn);
+  $("tab-lead").setAttribute("aria-selected",!isEarn);
+  $("panel-earn").style.display=isEarn?"block":"none";
+  $("panel-lead").style.display=isEarn?"none":"block";
+  if(isEarn){$("amt").focus()}else{$("leadamt").focus()}
+}
+$("tab-earn").onclick=()=>switchTab("earn");
+$("tab-lead").onclick=()=>switchTab("lead");
+
+const cardLead=$("card-lead");
+if(cardLead){
+  cardLead.onclick=()=>{
+    switchTab("lead");
+    const sec=$("upd-sec");
+    sec.scrollIntoView({behavior:"smooth",block:"center"});
+    sec.classList.remove("glow");
+    void sec.offsetWidth;
+    sec.classList.add("glow");
+    setTimeout(()=>{$("leadamt").focus()},400);
+  };
+}
+
 async function submitEarning(){
   const amt=parseFloat($("amt").value);
   if(!(amt>0)){msg("Sahi amount daalo (0 se zyada).",true);return}
@@ -340,9 +428,61 @@ async function submitEarning(){
 }
 $("addbtn").onclick=submitEarning;
 $("amt").addEventListener("keydown",e=>{if(e.key==="Enter")submitEarning()});
-document.querySelectorAll(".chips button").forEach(b=>b.onclick=()=>{$("amt").value=b.dataset.q;$("amt").focus()});
-if(CONFIG.API_URL)$("clrbtn").style.display="none";
-$("clrbtn").onclick=()=>{if(confirm("Saari earning reset kar dein?")){clearEarnings();msg("Reset ho gaya.")}};
+
+async function saveLead(newLead,successText){
+  if(CONFIG.API_URL){
+    try{
+      const r=await fetch(CONFIG.API_URL,{method:"POST",headers:{"Content-Type":"application/json"},credentials:"include",body:JSON.stringify({leadership:newLead})});
+      if(!r.ok)throw new Error(r.status);
+      await load();
+    }catch(e){msg("Server par save nahi hua. Dobara try karo.",true);return}
+  }else setLeadership(newLead);
+  msg(successText);
+}
+
+async function submitAddLeadership(){
+  const amt=parseFloat($("leadamt").value);
+  if(!(amt>0)){msg("Sahi incentive amount daalo (0 se zyada).",true);return}
+  const next=(Number(LEAD)||0)+amt;
+  await saveLead(next,"✔ "+inr(amt)+" Leadership Incentive me jud gaya! Naya total: "+inr(next));
+  $("leadamt").value="";
+}
+$("addleadbtn").onclick=submitAddLeadership;
+$("leadamt").addEventListener("keydown",e=>{if(e.key==="Enter")submitAddLeadership()});
+
+async function submitSetLeadership(){
+  const amt=parseFloat($("leadamt").value);
+  if(isNaN(amt)||amt<0){msg("Sahi incentive amount daalo (0 ya usse zyada).",true);return}
+  await saveLead(amt,"✔ Leadership Incentive set ho gaya: "+inr(amt));
+  $("leadamt").value="";
+}
+$("setleadbtn").onclick=submitSetLeadership;
+
+async function resetLeadershipAction(){
+  if(confirm("Leadership Incentive ko reset (₹0) kar dein?")){
+    await saveLead(0,"✔ Leadership Incentive reset ho gaya (₹0)");
+    $("leadamt").value="";
+  }
+}
+$("clrleadbtn").onclick=resetLeadershipAction;
+
+async function submitQuickLeadership(){
+  const amt=parseFloat($("amt").value);
+  if(!(amt>0)){msg("Pehle Amount box me sahi number daalo.",true);return}
+  const next=(Number(LEAD)||0)+amt;
+  await saveLead(next,"✔ "+inr(amt)+" Leadership Incentive me jud gaya! Naya total: "+inr(next));
+  $("amt").value="";
+}
+$("quickleadbtn").onclick=submitQuickLeadership;
+
+document.querySelectorAll("#earn-chips button").forEach(b=>b.onclick=()=>{$("amt").value=b.dataset.q;$("amt").focus()});
+document.querySelectorAll("#lead-chips button").forEach(b=>b.onclick=()=>{$("leadamt").value=b.dataset.q;$("leadamt").focus()});
+
+if(CONFIG.API_URL){
+  $("clrbtn").style.display="none";
+  $("clrleadbtn").style.display="none";
+}
+$("clrbtn").onclick=()=>{if(confirm("Saari earning aur incentive reset kar dein?")){clearEarnings();msg("Reset ho gaya.")}};
 </script>
 </body>
 </html>
